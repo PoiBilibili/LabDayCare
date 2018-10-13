@@ -1,4 +1,4 @@
-package edu.neu.csye6200;
+package edu.neu.csye6200.LABDayCare;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -17,7 +17,7 @@ public class ReadTest {
 						String[] fields = inputLine.split(",");
 						String name = fields[0];
 						double grade = new Double(fields[1]);
-						int age = new Integer(fields[2]);		
+						int age = new Integer(fields[2]);
 						// instantiate Student object from line in file and add to list
 						students.add(new Student (age,name,grade));
 					}

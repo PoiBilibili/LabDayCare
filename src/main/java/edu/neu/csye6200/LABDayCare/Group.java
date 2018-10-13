@@ -1,4 +1,4 @@
-package edu.neu.csye6200;
+package edu.neu.csye6200.LABDayCare;
 
 import java.util.List;
 import java.util.Vector;
@@ -6,7 +6,7 @@ import java.util.Vector;
 public class Group {
 	private int size = 0;
 	private	List<Student> students = new Vector<>();
-	
+
 	public Group(int size) {
 		this.size = size;
 	}

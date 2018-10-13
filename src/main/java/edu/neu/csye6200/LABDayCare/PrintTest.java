@@ -1,4 +1,4 @@
-package edu.neu.csye6200;
+package edu.neu.csye6200.LABDayCare;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -15,7 +15,7 @@ public class PrintTest {
 		// try with resources: all resources in () are closed at conclusion of try clause
 		try (	// open output stream to output file for writing.
 				FileWriter fw = new FileWriter(fileName);
-				BufferedWriter out= new BufferedWriter(fw);  
+				BufferedWriter out= new BufferedWriter(fw);
 			   ) {
 				for (int i = 0; i<names.length; i++) {
 					out.write(names[i] + "," + gpas[i] + "," + ages[i] );

@@ -1,4 +1,4 @@
-package edu.neu.csye6200;
+package edu.neu.csye6200.LABDayCare;
 
 import java.util.*;
 
@@ -6,7 +6,7 @@ public class ClassRoom {
 	private int capacity;
 	private String name;
 	private List<Group> groups = new Vector<>();
-	
+
 	public ClassRoom(String name, int capacity) {
 		this.capacity = capacity;
 		this.name = name;
