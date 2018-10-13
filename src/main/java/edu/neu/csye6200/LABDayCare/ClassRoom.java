@@ -7,6 +7,8 @@ public class ClassRoom {
 	private String name;
 	private List<Group> groups = new Vector<>();
 	private int groupsize;
+	private int minage;
+	private int maxage;
 
 	public ClassRoom(String name, int maxgroup, int groupsize) {
 		this.maxgroup = maxgroup;
