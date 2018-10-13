@@ -11,7 +11,7 @@ public class Controller {
   private static final String template = "Hello, %s!";
   private final AtomicLong counter = new AtomicLong();
 
-  String path = "/Users/omnip/Programe/csye6200/LaBDayCare/src/main/java/edu/neu/csye6200/LABDayCare/roster.csv";
+  String path = "./roster.csv";
   FileAccessor fa = new FileAccessor(path, "Student");
 
   @RequestMapping("/hello")
