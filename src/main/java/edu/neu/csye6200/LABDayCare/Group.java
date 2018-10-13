@@ -1,22 +1,29 @@
-package edu.neu.csye6200.LABDayCare;
+package edu.neu.csye6200;
 
 import java.util.List;
 import java.util.Vector;
 
 public class Group {
-	private int size = 0;
+	private int capacity = 0;
 	private	List<Student> students = new Vector<>();
-
-	public Group(int size) {
-		this.size = size;
+	
+	public Group(int capacity) {
+		this.capacity = capacity;
 	}
 	public int addStudent(Student student) {
 		if(this.isFull()) return -1;
 		else students.add(student);
 		return 1;
 	}
-	private boolean isFull() {
-		if(students.size()>=size) return true;
+	public boolean isFull() {
+		if(students.size()>=capacity) return true;
 		return false;
+	}
+	public String toString() {
+		StringBuilder ret = new StringBuilder();
+		for(Student s:students) {
+			ret.append(s.toString()+" ");
+		}
+		return ret.toString();
 	}
 }

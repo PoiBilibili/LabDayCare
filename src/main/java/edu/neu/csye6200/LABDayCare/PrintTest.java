@@ -1,4 +1,4 @@
-package edu.neu.csye6200.LABDayCare;
+package edu.neu.csye6200;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -8,14 +8,15 @@ public class PrintTest {
 
 	public static void printstd(String fileName){
 		// TODO Auto-generated method stub
-		String[] names = {"Dan", "Jim", "Eve", "Ina", "Zhou"};
-		String[] gpas = {"9.33","2.88", "3.99", "4.66", "5.00"};
-		String[] ages = {"17", "67", "37", "47", "58"};
+		String[] names = {"Jimmy", "Sally", "Lizzy", "Markie", "Johnny","Bobby","Billy","Evie","Becky","Jessie","Jackie","Laurie"
+						,"Cathey","Millie","Ruthie","Stanley","Mary","Annie"};
+		String[] gpas = {"12", "23", "62", "32", "12","48","26","40","29","14","12","27","12","63","34","53","41","30"};
+		String[] ages = {"12", "23", "62", "32", "12","48","26","40","29","14","12","27","12","63","34","53","41","30"};
 
 		// try with resources: all resources in () are closed at conclusion of try clause
 		try (	// open output stream to output file for writing.
 				FileWriter fw = new FileWriter(fileName);
-				BufferedWriter out= new BufferedWriter(fw);
+				BufferedWriter out= new BufferedWriter(fw);  
 			   ) {
 				for (int i = 0; i<names.length; i++) {
 					out.write(names[i] + "," + gpas[i] + "," + ages[i] );

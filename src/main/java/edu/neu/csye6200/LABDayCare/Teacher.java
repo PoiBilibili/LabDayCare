@@ -1,8 +1,8 @@
-package edu.neu.csye6200.LABDayCare;
+package edu.neu.csye6200;
 
 public class Teacher extends Person implements Comparable<Teacher>{
 	private int credits;
-
+	
 	public Teacher(int age, String name, int credits) {
 		super(age, name);
 		this.credits = credits;
@@ -19,5 +19,5 @@ public class Teacher extends Person implements Comparable<Teacher>{
 	public int getCredits() {
 		return this.credits;
 	}
-
+	
 }
