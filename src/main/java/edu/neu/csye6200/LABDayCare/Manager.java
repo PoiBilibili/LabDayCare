@@ -6,12 +6,12 @@ public class Manager {
   private List<ClassRoom> classrooms = new Vector<>();
 
   public Manager() {
-    classrooms.add(new ClassRoom("6-12", 3, 4));
-    classrooms.add(new ClassRoom("13-24", 3, 5));
-    classrooms.add(new ClassRoom("25-35", 3, 6));
-    classrooms.add(new ClassRoom("36-47", 3, 8));
-    classrooms.add(new ClassRoom("48-59", 2, 12));
-    classrooms.add(new ClassRoom("60 on up", 2, 15));
+    // classrooms.add(new ClassRoom("6-12", 3, 4));
+    // classrooms.add(new ClassRoom("13-24", 3, 5));
+    // classrooms.add(new ClassRoom("25-35", 3, 6));
+    // classrooms.add(new ClassRoom("36-47", 3, 8));
+    // classrooms.add(new ClassRoom("48-59", 2, 12));
+    // classrooms.add(new ClassRoom("60 on up", 2, 15));
   }
 
   public void addStudents(List<Student> s) {
