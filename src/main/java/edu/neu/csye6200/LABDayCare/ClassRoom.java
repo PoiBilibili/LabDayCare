@@ -29,7 +29,7 @@ public class ClassRoom {
 
 	public String toString() {
 		StringBuilder ret = new StringBuilder();
-		ret.append(this.name);
+		ret.append("Class" + this.name + ": ");
 		int i = 0;
 		for (Group gr : groups) {
 			i++;

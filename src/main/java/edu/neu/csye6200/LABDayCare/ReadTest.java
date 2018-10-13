@@ -11,14 +11,15 @@ public class ReadTest {
 		List<Student> students = new ArrayList<Student>();
 		try (BufferedReader inLine = new BufferedReader(new FileReader(fileName));) {
 			String inputLine = null; // read one line from file at a time
+			inputLine = inLine.readLine();
 			while ((inputLine = inLine.readLine()) != null) {
 				// Parse line converting each string token into a Student object field
 				String[] fields = inputLine.split(",");
-				String name = fields[0];
-				double grade = new Double(fields[1]);
+				int id = new Integer(fields[0]);
+				String name = fields[1];
 				int age = new Integer(fields[2]);
 				// instantiate Student object from line in file and add to list
-				students.add(new Student(age, name, grade));
+				students.add(new Student(id, name, age));
 			}
 		} catch (IOException e) {
 			// catch IOException (and implicitly FileNotFoundException)

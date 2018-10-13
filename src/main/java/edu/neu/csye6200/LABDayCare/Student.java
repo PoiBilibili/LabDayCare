@@ -3,26 +3,22 @@ package edu.neu.csye6200.LABDayCare;
 import java.util.Comparator;
 
 public class Student extends Person implements Comparable<Student> {
-	double grade;
-	Person[] parents;// father and mother
+	private int id;
+	private Person[] parents;// father and mother
 
 	public Student() {
 		super();
 		this.parents = new Person[2];
 	}
 
-	public Student(int age, String name, double grade) {
+	public Student(int id, String name, int age) {
 		super(age, name);
-		this.grade = grade;
+		this.id = id;
 		this.parents = new Person[2];
 	}
 
-	public double getGrade() {
-		return grade;
-	}
-
-	public void setGrade(int grade) {
-		this.grade = grade;
+	public double getID() {
+		return id;
 	}
 
 	public void setFather(Person father) {
@@ -42,13 +38,13 @@ public class Student extends Person implements Comparable<Student> {
 	}
 
 	public String toString() {
-		return "[Name:" + super.getName() + "]";
+		return "[" + this.id + " " + super.getName() + "]";
 		// + " [Age:" + super.getAge() +"]"
 		// + "[Parents: Father:"+this.getFather() +"Mother:"+this.getMohter()+"]";
 	}
 
 	public int compareTo(Student student2) {
-		return Double.compare(this.getGrade(), student2.getGrade());
+		return Double.compare(this.getID(), student2.getID());
 	}
 
 	public static Comparator<Student> compareByGpa() {
@@ -60,8 +56,4 @@ public class Student extends Person implements Comparable<Student> {
 		return Integer.compare(this.getAge(), student2.getAge());
 	}
 
-	public static void demo() {
-		Student st = new Student(17, "Jing", 5);
-		System.out.println(st);
-	}
 }
