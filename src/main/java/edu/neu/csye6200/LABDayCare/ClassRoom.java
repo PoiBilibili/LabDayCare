@@ -34,7 +34,16 @@ public class ClassRoom {
 		return groups;
 	}
 
+	public int getMinAge() {
+		return minage;
+	}
+
+	public int getMaxAge() {
+		return maxage;
+	}
+
 	public void addStudent(Student s) {
+		System.out.println(s);
 		if (s.getAge() > maxage || s.getAge() < minage) {
 			new IllegalArgumentException("Age is invalid");
 		} else {
