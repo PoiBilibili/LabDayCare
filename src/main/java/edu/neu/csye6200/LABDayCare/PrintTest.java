@@ -7,13 +7,12 @@ import java.io.IOException;
 public class PrintTest {
 
 	public static void printstd(String fileName) {
-		// TODO Auto-generated method stub
 		String[] names = { "Jimmy", "Sally", "Lizzy", "Markie", "Johnny", "Bobby", "Billy", "Evie", "Becky", "Jessie",
 				"Jackie", "Laurie", "Cathey", "Millie", "Ruthie", "Stanley", "Mary", "Annie" };
-		String[] gpas = { "12", "23", "62", "32", "12", "48", "26", "40", "29", "14", "12", "27", "12", "63", "34", "53",
-				"41", "30" };
-		String[] ages = { "12", "23", "62", "32", "12", "48", "26", "40", "29", "14", "12", "27", "12", "63", "34", "53",
-				"41", "30" };
+		String[] gpas = { "12", "23", "62", "32", "12", "48", "26", "40", "29", "14", "12", "27", "12", "63", "34",
+				"53", "41", "30" };
+		String[] ages = { "12", "23", "62", "32", "12", "48", "26", "40", "29", "14", "12", "27", "12", "63", "34",
+				"53", "41", "30" };
 
 		// try with resources: all resources in () are closed at conclusion of try
 		// clause
