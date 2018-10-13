@@ -1,4 +1,4 @@
-package main.java.edu.neu.csye6200.LABDayCare;
+package edu.neu.csye6200.LABDayCare;
 
 import java.util.*;
 
