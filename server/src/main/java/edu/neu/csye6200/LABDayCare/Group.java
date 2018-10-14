@@ -11,6 +11,10 @@ public class Group {
 		this.capacity = capacity;
 	}
 
+	public List<Student> getStudents() {
+		return students;
+	}
+
 	public int addStudent(Student student) {
 		if (this.isFull())
 			return -1;

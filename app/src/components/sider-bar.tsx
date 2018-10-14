@@ -24,7 +24,9 @@ export default class SideBar extends React.Component {
           </Menu.Item>
           <Menu.Item key="2">
             <Icon type="video-camera" />
-            <span className="nav-text">nav 2</span>
+            <span className="nav-text">
+              <Link to="/classrooms">ClassRooms</Link>
+            </span>
           </Menu.Item>
           <Menu.Item key="3">
             <Icon type="upload" />

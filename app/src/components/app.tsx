@@ -7,6 +7,7 @@ import * as React from "react";
 import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import { withRouter } from "react-router";
 import Students from "./students";
+import ClassRooms from "./classrooms";
 import SideBar from "./sider-bar";
 const { Header, Sider, Content } = Layout;
 
@@ -16,7 +17,7 @@ export default class App extends React.Component<{}, {}> {
       <Router>
         <div>
           <Layout className="app">
-            <Layout.Sider
+            <Sider
               style={{
                 overflow: "auto",
                 height: "100vh",
@@ -30,7 +31,7 @@ export default class App extends React.Component<{}, {}> {
                 CSYE6200
               </h3>
               <SideBar />
-            </Layout.Sider>
+            </Sider>
 
             <Layout style={{ marginLeft: 200 }}>
               <Header style={{ background: "#fff", padding: 0 }} />
@@ -43,6 +44,7 @@ export default class App extends React.Component<{}, {}> {
                 }}
               >
                 <Route exact={true} path="/" component={Students} />
+                <Route exact={true} path="/classrooms" component={ClassRooms} />
               </Content>
             </Layout>
           </Layout>

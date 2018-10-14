@@ -1,7 +1,8 @@
 package edu.neu.csye6200.LABDayCare;
 
 import org.springframework.web.bind.annotation.*;
-import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;;
 
 @RestController
 public class ClassRoomsController {
@@ -11,8 +12,8 @@ public class ClassRoomsController {
   FileAccessor fa = new FileAccessor(path, "Student");
 
   @GetMapping("/classrooms")
-  public HashMap<String, ClassRoom> classrooms() {
-    return crs.list();
+  public List<ClassRoom> classrooms() {
+    return new ArrayList<ClassRoom>(crs.list().values());
   }
 
   @PostMapping("/classrooms")
@@ -24,6 +25,11 @@ public class ClassRoomsController {
   public void addstudent(@RequestParam("sid") String sid, @RequestParam("cid") String cid) {
     fa.open();
     crs.list().get(cid).addStudent(fa.getById(sid));
+  }
+
+  @GetMapping("/groups")
+  public List<Group> groups(@RequestParam("cid") String cid) {
+    return crs.getByName(cid).getGroups();
   }
 
 }
