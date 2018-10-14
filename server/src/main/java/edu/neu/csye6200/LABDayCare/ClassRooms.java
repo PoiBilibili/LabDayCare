@@ -17,6 +17,10 @@ public class ClassRooms {
     crs.put(name, cr);
   }
 
+  public ClassRoom getByName(String key){
+    return crs.get(key);
+  }
+
   public HashMap<String, ClassRoom> list() {
     return crs;
   }

@@ -17,9 +17,7 @@ export default class Students extends React.Component<any, any> {
       title: "Name",
       dataIndex: "name",
       render: (text: string) => <a href="javascript:;">{text}</a>,
-      sorter: (a: any, b: any) => {
-        return a.name - b.name;
-      }
+      sorter: (a: any, b: any) => a.name.localeCompare(b.name)
     },
     {
       title: "Age",

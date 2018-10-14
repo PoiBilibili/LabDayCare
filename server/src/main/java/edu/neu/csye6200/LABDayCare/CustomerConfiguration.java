@@ -8,7 +8,7 @@ public class CustomerConfiguration implements WebMvcConfigurer {
 
   @Override
   public void addCorsMappings(CorsRegistry registry) {
-    registry.addMapping("/**").allowedOrigins("*").allowedMethods("PUT", "DELETE", "GET").allowedHeaders("*")
+    registry.addMapping("/**").allowedOrigins("*").allowedMethods("PUT", "DELETE", "GET", "POST").allowedHeaders("*")
         .allowCredentials(false).maxAge(3600);
   }
 }
