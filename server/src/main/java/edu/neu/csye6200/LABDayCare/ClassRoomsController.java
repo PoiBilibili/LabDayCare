@@ -22,7 +22,7 @@ public class ClassRoomsController {
   }
 
   @PostMapping("/addstudent")
-  public void addstudent(@RequestParam("sid") String sid, @RequestParam("cid") String cid) {
+  public void addstudent(@RequestParam("cid") String cid, @RequestParam("sid") String sid) {
     fa.open();
     crs.list().get(cid).addStudent(fa.getById(sid));
   }
