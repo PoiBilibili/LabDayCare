@@ -1,7 +1,9 @@
 package edu.neu.csye6200.LABDayCare;
 
 import org.springframework.web.bind.annotation.*;
-import java.util.HashMap;
+
+import java.util.List;
+import java.util.ArrayList;
 
 @RestController
 public class StudentsController {
@@ -10,8 +12,8 @@ public class StudentsController {
   FileAccessor fa = new FileAccessor(path, "Student");
 
   @GetMapping("/students")
-  public HashMap<String, Student> student() {
+  public List<Student> students() {
     fa.open();
-    return fa.lists();
+    return new ArrayList<Student>(fa.lists().values());
   }
 }
