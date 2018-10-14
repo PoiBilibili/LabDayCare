@@ -1,8 +1,9 @@
 import * as React from "react";
 
 import { inject, observer } from "mobx-react";
-import { Table, Button, Modal, Form, Input, InputNumber, Divider } from "antd";
+import { Table, Button, Modal, Form, Input, InputNumber, List } from "antd";
 import { Request } from "./utils";
+import * as querystring from "querystring";
 
 const FormItem = Form.Item;
 
@@ -125,24 +126,55 @@ const ViewGroup = Form.create()(
       }
     ];
 
-    public componentDidMount(){
+    public componentDidMount() {}
 
-    }
+    public renderStudents = (groups: any) => {
+      const list = [];
+
+      for (let key in groups) {
+        console.log();
+        const students = groups[key].students;
+        const title = `Group${+key + 1}`;
+        let description = "";
+        for (let v of students) {
+          description += v.name + ", ";
+        }
+        description = description.slice(0, -2);
+        list.push({
+          title,
+          description
+        });
+      }
+
+      return (
+        <List
+          itemLayout="horizontal"
+          dataSource={list}
+          renderItem={(item: any) => (
+            <List.Item>
+              <List.Item.Meta
+                title={item.title}
+                description={item.description}
+              />
+            </List.Item>
+          )}
+        />
+      );
+    };
 
     render() {
-      const { visible, onCancel, onCreate, form } = this.props;
-      const { getFieldDecorator } = form;
+      const { visible, onCancel, groups } = this.props;
+      console.log(groups, "+++++");
+
       return (
         <Modal
           visible={visible}
           title="View groups"
-          okText="Create"
+          okText="Close"
+          onOk={onCancel}
           onCancel={onCancel}
-          onOk={onCreate}
         >
-          <div>
-            names
-          </div>
+          <div>{this.renderStudents(groups)}</div>
         </Modal>
       );
     }
@@ -182,7 +214,7 @@ export default class ClassRoom extends React.Component<any, any> {
       dataIndex: "capacity",
       render: (text: string, record: any) => (
         <span>
-          <a href="javascript:;">View group</a>
+          <a onClick={() => this.setGroups(record.groups)}>View group</a>
         </span>
       )
     }
@@ -194,7 +226,9 @@ export default class ClassRoom extends React.Component<any, any> {
     this.state = {
       data: [],
       visible: false,
-      visibleASF: false
+      visibleASF: false,
+      currentGroups: [],
+      visibleGroups: false
     };
   }
 
@@ -228,9 +262,7 @@ export default class ClassRoom extends React.Component<any, any> {
         return;
       }
 
-      console.log("Received values of form: ", values);
       Request.post("/classrooms", values).then(res => {
-        console.log(res);
         this.refresh();
         form.resetFields();
         this.setState({ visible: false });
@@ -246,12 +278,14 @@ export default class ClassRoom extends React.Component<any, any> {
       }
 
       console.log("Received values of form: ", values);
-      Request.post("/addstudent", values).then(res => {
-        console.log(res);
-        this.refresh();
-        form.resetFields();
-        this.setState({ visible: false });
-      });
+      Request.post(`/addstudent?${querystring.stringify(values)}`, {}).then(
+        res => {
+          console.log(res);
+          this.refresh();
+          form.resetFields();
+          this.setState({ visible: false });
+        }
+      );
     });
   };
 
@@ -267,6 +301,14 @@ export default class ClassRoom extends React.Component<any, any> {
     this.setState({ visibleASF: true });
   };
 
+  setGroups = (groups: any) => {
+    this.setState({ currentGroups: groups, visibleGroups: true });
+  };
+
+  handleGroupsCancel = () => {
+    this.setState({ visibleGroups: false });
+  };
+
   render() {
     return (
       <div>
@@ -277,19 +319,25 @@ export default class ClassRoom extends React.Component<any, any> {
           onCreate={this.handleCreate}
         />
 
-        <div style={{ marginBottom: "16px" }}>
-          <Button onClick={this.showModal} style={{ marginRight: "16px" }}>
-            Add
-          </Button>
-          <Button onClick={this.showASFModal}>Add Student</Button>
-        </div>
-
         <AddStudentForm
           wrappedComponentRef={this.saveASFFormRef}
           visible={this.state.visibleASF}
           onCancel={this.handleASFCancel}
           onCreate={this.handleASFCreate}
         />
+
+        <ViewGroup
+          groups={this.state.currentGroups}
+          visible={this.state.visibleGroups}
+          onCancel={this.handleGroupsCancel}
+        />
+
+        <div style={{ marginBottom: "16px" }}>
+          <Button onClick={this.showModal} style={{ marginRight: "16px" }}>
+            Add
+          </Button>
+          <Button onClick={this.showASFModal}>Add Student</Button>
+        </div>
 
         <Table
           columns={this.columns}
