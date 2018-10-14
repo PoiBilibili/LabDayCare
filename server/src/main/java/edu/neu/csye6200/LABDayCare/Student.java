@@ -5,14 +5,12 @@ import java.util.*;
 public class Student extends Person implements Comparable<Student> {
 	private int id;
 	private Person[] parents;// father and mother
-	private List<Registration> rglist;// registration date
-	private List<Immunization> imlist;// immunization date
+	private List<Registration> rglist = new Vector<>();;// registration date
+	private List<Immunization> imlist = new Vector<>();;// immunization date
 
 	public Student() {
 		super();
 		this.parents = new Person[2];
-		rglist = new Vector<>();
-		imlist = new Vector<>();
 	}
 
 	public Student(int id, String name, int age) {
@@ -21,7 +19,7 @@ public class Student extends Person implements Comparable<Student> {
 		this.parents = new Person[2];
 	}
 
-	public double getID() {
+	public int getID() {
 		return id;
 	}
 
@@ -68,6 +66,7 @@ public class Student extends Person implements Comparable<Student> {
 
 	public void registration(int month, int date, int year) {
 		Registration nr = new Registration(month, date, year);
+		System.out.println(rglist);
 		this.rglist.add(nr);
 	}
 

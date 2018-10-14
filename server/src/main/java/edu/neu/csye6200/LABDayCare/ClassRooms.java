@@ -21,6 +21,13 @@ public class ClassRooms {
     return crs.get(key);
   }
 
+  public Student getByStudentID( int sid ){
+    for(ClassRoom cl : crs.values()){
+      if(cl.hasStudent(sid))
+        return cl.getByStudentID(sid);
+    }
+    return null;
+  }
   public HashMap<String, ClassRoom> list() {
     return crs;
   }
