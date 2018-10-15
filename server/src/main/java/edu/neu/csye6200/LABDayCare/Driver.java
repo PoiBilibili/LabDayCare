@@ -11,7 +11,5 @@ public class Driver {
         Manager m = new Manager();
         m.addStudents(students);
         m.showTable();
-        students.get(0).regist();
-        System.out.println(students.get(0).getRegistDate());
     }
 }

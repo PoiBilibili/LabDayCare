@@ -6,6 +6,7 @@ public class ClassRoom {
 	private int maxgroup;
 	private String name;
 	private List<Group> groups = new Vector<>();
+	private Map<Integer, Student> students = new HashMap<>();
 	private int groupsize;
 	private int minage;
 	private int maxage;
@@ -49,12 +50,31 @@ public class ClassRoom {
 			if (groups.size() < 1 || groups.get(groups.size() - 1).isFull()) {
 				groups.add(new Group(groupsize));
 				groups.get(groups.size() - 1).addStudent(s);
+				this.students.put(s.getID(),s);
 			} else {
 				groups.get(groups.size() - 1).addStudent(s);
+				this.students.put(s.getID(),s);
 			}
 		}
 	}
+	
+	public boolean hasStudent(Student s){
+		if(this.students.containsValue(s)) return true;
+		return false;
+	}
 
+	public boolean hasStudent(int sid){
+		if(this.students.containsKey(sid)) return true;
+		return false;
+	}
+
+	public Student getByStudentID(int sid){
+		for(Group g: groups)
+			for(Student s: g.getStudents())
+				if(s.getID() == sid)
+					return s;
+		return null;
+	}
 	public String toString() {
 		StringBuilder ret = new StringBuilder();
 		ret.append("Class" + this.name + ": ");
