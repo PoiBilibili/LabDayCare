@@ -1,7 +1,6 @@
 import * as React from "react";
 
-import { inject, observer } from "mobx-react";
-import { Table, Modal, Form, Input, DatePicker, Button } from "antd";
+import { Table, Modal, Form, Input, DatePicker, Button, Tag } from "antd";
 import { Request } from "./utils";
 const FormItem = Form.Item;
 
@@ -33,10 +32,6 @@ const RegAddForm = Form.create()(
 
 const ImmuAddForm = Form.create()(
   class extends React.Component<any, any> {
-    private formItemLayout = {
-      labelCol: { span: 4 },
-      wrapperCol: { span: 14 }
-    };
     public onChange() {
       console.log(111);
     }
@@ -104,7 +99,19 @@ export default class Students extends React.Component<any, any> {
     {
       title: "Reg",
       dataIndex: "reg",
-      render: () => <a onClick={() => this.showRADModal()}>reg</a>,
+      render: () => {
+        // const tags = RegistList.map((tag: string) => (
+        //   <Tag color="blue" key={tag}>
+        //     {tag}
+        //   </Tag>
+        // ));
+        return (
+          <span>
+            {/* {tags} */}
+            <a onClick={() => this.showRADModal()}>reg</a>
+          </span>
+        );
+      }
     },
     {
       title: "Immunization",

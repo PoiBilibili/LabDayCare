@@ -4,9 +4,43 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 
 @RestController
 public class StudentsController {
+
+  private class AddRegistration{
+    private String sid;
+    private String date;
+
+    /**
+     * @return the sid
+     */
+    public String getSid() {
+      return sid;
+    }
+
+    /**
+     * @param sid the sid to set
+     */
+    public void setSid(String sid) {
+      this.sid = sid;
+    }
+    /**
+     * @return the date
+     */
+    public String getDate() {
+      return date;
+    }
+
+    /**
+     * @param date the date to set
+     */
+    public void setDate(String date) {
+      this.date = date;
+    }
+
+  }
 
   String path = "./roster.csv";
   FileAccessor fa = new FileAccessor(path, "Student");
@@ -18,14 +52,13 @@ public class StudentsController {
   }
 
   @PostMapping("/addRegistration")
-  public void addRegistration(@RequestParam("sid") String sid, @RequestParam("date") String date) {
-    fa.getById(sid).registration(date);;
+  public void addRegistration(@RequestBody AddRegistration body) {
+    fa.getById(body.getSid()).registration(body.getDate());;
   }
 
   @PostMapping("/addImmunization")
   public void addImmunization(@RequestParam("sid") String sid, @RequestParam("type") String str,@RequestParam("date") String date) {
     fa.getById(sid).immunization(str,date);;
   }
-
 
 }
