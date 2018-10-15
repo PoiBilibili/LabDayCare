@@ -9,7 +9,7 @@ import java.util.Map;
 @RestController
 public class StudentsController {
 
-  private class AddRegistration{
+  private static class  AddRegistration{
     private String sid;
     private String date;
 
@@ -53,6 +53,7 @@ public class StudentsController {
 
   @PostMapping("/addRegistration")
   public void addRegistration(@RequestBody AddRegistration body) {
+    System.out.println(body.getSid() + " " + body.getDate() +"======");
     fa.getById(body.getSid()).registration(body.getDate());;
   }
 
