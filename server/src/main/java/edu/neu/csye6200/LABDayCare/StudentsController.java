@@ -17,4 +17,15 @@ public class StudentsController {
     return new ArrayList<Student>(fa.lists().values());
   }
 
+  @PostMapping("/addRegistration")
+  public void addRegistration(@RequestParam("sid") String sid, @RequestParam("month") int m, @RequestParam("day") int d, @RequestParam("year") int y) {
+    fa.getById(sid).registration(m,d,y);;
+  }
+
+  @PostMapping("/addImmunization")
+  public void addImmunization(@RequestParam("sid") String sid, @RequestParam("type") String str,@RequestParam("month") int m, @RequestParam("day") int d, @RequestParam("year") int y) {
+    fa.getById(sid).immunization(str,m,d,y);;
+  }
+
+
 }
