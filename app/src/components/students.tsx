@@ -15,7 +15,7 @@ const RegAddForm = Form.create()(
       return (
         <Form layout="inline" style={{ marginBottom: "12px" }}>
           <FormItem>
-            {getFieldDecorator("Date", {
+            {getFieldDecorator("date", {
               rules: [
                 {
                   required: true,
@@ -32,11 +32,22 @@ const RegAddForm = Form.create()(
 
 const ImmuAddForm = Form.create()(
   class extends React.Component<any, any> {
-    public onChange() {
-      console.log(111);
-    }
+    public add() {
+      const { form, sid, refresh } = this.props;
+      form.validateFields((err: any, values: any) => {
+        console.log(values);
 
-    public add() {}
+        const obj = {
+          date: values.date.format("MM/DD/YYYY"),
+          sid,
+          type: values.name
+        };
+
+        Request.post("/addImmunization", obj).then((res: any) => {
+          refresh();
+        });
+      });
+    }
 
     render() {
       const { form } = this.props;
@@ -61,7 +72,7 @@ const ImmuAddForm = Form.create()(
                   message: "Please input the date of immunization!"
                 }
               ]
-            })(<DatePicker onChange={() => this.onChange()} />)}
+            })(<DatePicker />)}
           </FormItem>
           <FormItem>
             <Button type="primary" onClick={() => this.add()}>
@@ -100,23 +111,25 @@ export default class Students extends React.Component<any, any> {
       title: "Reg",
       dataIndex: "reg",
       render: (text: string, record: any) => {
-        const tags = record.registList.map((tag: string) => (
-          <Tag color="blue" key={tag}>
-            {tag}
-          </Tag>
-        ));
         return (
-          <span>
-            {tags}
-            <a onClick={() => this.showRADModal()}>reg</a>
-          </span>
+          <div>
+            {record.registList.map((tag: any) => (
+              <Tag color="blue" key={tag.date}>
+                {tag.date}
+              </Tag>
+            ))}
+
+            <a onClick={() => this.showRADModal(record.id)}>reg</a>
+          </div>
         );
       }
     },
     {
       title: "Immunization",
       render: (text: string, record: any) => (
-        <a onClick={() => this.showModal(record.immunizationList)}>view</a>
+        <a onClick={() => this.showModal(record.immunizationList, record.id)}>
+          view
+        </a>
       ),
       width: 150
     }
@@ -134,7 +147,7 @@ export default class Students extends React.Component<any, any> {
     }
   ];
 
-  private formRAForm:any;
+  private formRAForm: any;
 
   public constructor(props: any) {
     super(props);
@@ -142,7 +155,8 @@ export default class Students extends React.Component<any, any> {
       data: [],
       visible: false,
       visibleRAD: false,
-      immuData: []
+      immuData: [],
+      currID: 0
     };
   }
 
@@ -152,14 +166,14 @@ export default class Students extends React.Component<any, any> {
     });
   }
 
-  public refresh(){
+  refresh = () => {
     Request.get("/students").then((res: any) => {
       this.setState({ data: res.data });
     });
-  }
+  };
 
-  public showModal(immuData: any) {
-    this.setState({ visible: true, immuData });
+  public showModal(immuData: any, currID: string) {
+    this.setState({ visible: true, immuData, currID });
   }
 
   public onCancel() {
@@ -170,8 +184,8 @@ export default class Students extends React.Component<any, any> {
     this.setState({ visibleRAD: false });
   }
 
-  public showRADModal() {
-    this.setState({ visibleRAD: true });
+  public showRADModal(currID: string) {
+    this.setState({ visibleRAD: true, currID });
   }
 
   public onRADCreate() {
@@ -180,11 +194,14 @@ export default class Students extends React.Component<any, any> {
       if (err) {
         return;
       }
-
-      Request.post("/addRegistration", values).then(res => {
+      const obj = {
+        date: values.date.format("MM/DD/YYYY"),
+        sid: this.state.currID
+      };
+      Request.post("/addRegistration", obj).then(res => {
         this.refresh();
         form.resetFields();
-        this.setState({ visible: false });
+        this.setState({ visibleRAD: false });
       });
     });
   }
@@ -208,12 +225,12 @@ export default class Students extends React.Component<any, any> {
           onCancel={this.onCancel.bind(this)}
           onOk={this.onCancel.bind(this)}
         >
-          <ImmuAddForm />
+          <ImmuAddForm sid={this.state.currID} refresh={this.refresh} />
 
           <Table
             columns={this.immuColumns}
             dataSource={this.state.immuData}
-            rowKey="id"
+            rowKey="name"
           />
         </Modal>
 

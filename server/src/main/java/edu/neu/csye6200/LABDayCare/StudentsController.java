@@ -100,15 +100,12 @@ public class StudentsController {
 
   @GetMapping("/students")
   public List<Student> students() {
-
     return new ArrayList<Student>(fa.lists().values());
   }
 
   @PostMapping("/addRegistration")
   public void addRegistration(@RequestBody AddRegistration body) {
-
     fa.getById(body.getSid()).registration(body.getDate());
-    ;
   }
 
   @PostMapping("/addImmunization")
