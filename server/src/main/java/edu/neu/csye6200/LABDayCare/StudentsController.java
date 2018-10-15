@@ -18,13 +18,13 @@ public class StudentsController {
   }
 
   @PostMapping("/addRegistration")
-  public void addRegistration(@RequestParam("sid") String sid, @RequestParam("month") int m, @RequestParam("day") int d, @RequestParam("year") int y) {
-    fa.getById(sid).registration(m,d,y);;
+  public void addRegistration(@RequestParam("sid") String sid, @RequestParam("date") String date) {
+    fa.getById(sid).registration(date);;
   }
 
   @PostMapping("/addImmunization")
-  public void addImmunization(@RequestParam("sid") String sid, @RequestParam("type") String str,@RequestParam("month") int m, @RequestParam("day") int d, @RequestParam("year") int y) {
-    fa.getById(sid).immunization(str,m,d,y);;
+  public void addImmunization(@RequestParam("sid") String sid, @RequestParam("type") String str,@RequestParam("date") String date) {
+    fa.getById(sid).immunization(str,date);;
   }
 
 

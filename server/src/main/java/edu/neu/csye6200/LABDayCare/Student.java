@@ -58,14 +58,14 @@ public class Student extends Person implements Comparable<Student> {
 		return Integer.compare(this.getAge(), student2.getAge());
 	}
 
-	public void registration() {
-		Calendar cal = Calendar.getInstance();
-		Registration nr = new Registration(cal.get(Calendar.MONTH),cal.get(Calendar.DATE),cal.get(Calendar.YEAR));
-		this.rglist.add(nr);
-	}
+	// public void registration() {
+	// 	Calendar cal = Calendar.getInstance();
+	// 	Registration nr = new Registration(cal.get(Calendar.MONTH),cal.get(Calendar.DATE),cal.get(Calendar.YEAR));
+	// 	this.rglist.add(nr);
+	// }
 
-	public void registration(int month, int date, int year) {
-		Registration nr = new Registration(month, date, year);
+	public void registration(String date) {
+		Registration nr = new Registration(date);
 		System.out.println(rglist);
 		this.rglist.add(nr);
 	}
@@ -74,14 +74,14 @@ public class Student extends Person implements Comparable<Student> {
 		return rglist;
 	}
 
-	public void immunization(String typename) {
-		Calendar cal = Calendar.getInstance();
-		Immunization nr = new Immunization(typename, cal.get(Calendar.MONTH),cal.get(Calendar.DATE),cal.get(Calendar.YEAR));
-		this.imlist.add(nr);
-	}
+	// public void immunization(String typename) {
+	// 	Calendar cal = Calendar.getInstance();
+	// 	Immunization nr = new Immunization(typename, cal.get(Calendar.MONTH),cal.get(Calendar.DATE),cal.get(Calendar.YEAR));
+	// 	this.imlist.add(nr);
+	// }
 
-	public void immunization(String typename, int month, int date, int year) {
-		Immunization nr = new Immunization(typename, month, date, year);
+	public void immunization(String typename, String date) {
+		Immunization nr = new Immunization(typename, date);
 		this.imlist.add(nr);
 	}
 
