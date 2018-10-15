@@ -15,11 +15,11 @@ public class Students {// Singleton Class
         return StudentsHolder.INSTANCE; 
     }  
 
-    public static void addStudent(Student s){
+    public void addStudent(Student s){
         list.put(s.getID(),s);
     }
     
-    public static Map<Integer, Student> getStudentsMap(){
+    public Map<Integer, Student> getStudentsMap(){
         return list;
     }
 }
