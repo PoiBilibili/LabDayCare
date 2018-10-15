@@ -99,15 +99,15 @@ export default class Students extends React.Component<any, any> {
     {
       title: "Reg",
       dataIndex: "reg",
-      render: () => {
-        // const tags = RegistList.map((tag: string) => (
-        //   <Tag color="blue" key={tag}>
-        //     {tag}
-        //   </Tag>
-        // ));
+      render: (text: string, record: any) => {
+        const tags = record.registList.map((tag: string) => (
+          <Tag color="blue" key={tag}>
+            {tag}
+          </Tag>
+        ));
         return (
           <span>
-            {/* {tags} */}
+            {tags}
             <a onClick={() => this.showRADModal()}>reg</a>
           </span>
         );
@@ -115,7 +115,9 @@ export default class Students extends React.Component<any, any> {
     },
     {
       title: "Immunization",
-      render: () => <a onClick={() => this.showModal()}>view</a>,
+      render: (text: string, record: any) => (
+        <a onClick={() => this.showModal(record.immunizationList)}>view</a>
+      ),
       width: 150
     }
   ];
@@ -132,12 +134,15 @@ export default class Students extends React.Component<any, any> {
     }
   ];
 
+  private formRAForm:any;
+
   public constructor(props: any) {
     super(props);
     this.state = {
       data: [],
       visible: false,
-      visibleRAD: false
+      visibleRAD: false,
+      immuData: []
     };
   }
 
@@ -147,8 +152,14 @@ export default class Students extends React.Component<any, any> {
     });
   }
 
-  public showModal() {
-    this.setState({ visible: true });
+  public refresh(){
+    Request.get("/students").then((res: any) => {
+      this.setState({ data: res.data });
+    });
+  }
+
+  public showModal(immuData: any) {
+    this.setState({ visible: true, immuData });
   }
 
   public onCancel() {
@@ -162,6 +173,25 @@ export default class Students extends React.Component<any, any> {
   public showRADModal() {
     this.setState({ visibleRAD: true });
   }
+
+  public onRADCreate() {
+    const form = this.formRAForm.props.form;
+    form.validateFields((err: any, values: any) => {
+      if (err) {
+        return;
+      }
+
+      Request.post("/addRegistration", values).then(res => {
+        this.refresh();
+        form.resetFields();
+        this.setState({ visible: false });
+      });
+    });
+  }
+
+  saveRAFFormRef = (formRef: any) => {
+    this.formRAForm = formRef;
+  };
 
   render() {
     return (
@@ -192,9 +222,9 @@ export default class Students extends React.Component<any, any> {
           title="Registrations"
           okText="Enroll"
           onCancel={this.onRADCancel.bind(this)}
-          onOk={this.onRADCancel.bind(this)}
+          onOk={this.onRADCreate.bind(this)}
         >
-          <RegAddForm />
+          <RegAddForm wrappedComponentRef={this.saveRAFFormRef} />
         </Modal>
       </div>
     );

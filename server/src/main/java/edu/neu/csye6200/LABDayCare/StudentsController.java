@@ -114,7 +114,6 @@ public class StudentsController {
   @PostMapping("/addImmunization")
   public void addImmunization(@RequestBody AddImmunization body) {
     fa.getById(body.getSid()).immunization(body.getType(), body.getDate());
-    ;
   }
 
 }
