@@ -69,9 +69,11 @@ const AddStudentForm = Form.create()(
       labelCol: { span: 8 },
       wrapperCol: { span: 10 }
     };
+
     render() {
       const { visible, onCancel, onCreate, form } = this.props;
       const { getFieldDecorator } = form;
+
       return (
         <Modal
           visible={visible}
@@ -102,6 +104,7 @@ const AddStudentForm = Form.create()(
                 ]
               })(<Input />)}
             </FormItem>
+
           </Form>
         </Modal>
       );
