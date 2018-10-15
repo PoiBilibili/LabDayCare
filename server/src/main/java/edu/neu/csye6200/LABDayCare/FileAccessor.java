@@ -8,17 +8,17 @@ import java.util.HashMap;
  */
 public class FileAccessor {
 
-  HashMap<String, Student> students;
+  //Map<String, Student> students;
   String path;
 
   public FileAccessor(String path, String model) {
     super();
     this.path = path;
-    this.students = new HashMap<String, Student>();
+    
   }
 
   private void init(String[] fiels) {
-    students.put(fiels[0], new Student(Integer.parseInt(fiels[0]), fiels[1], Integer.parseInt(fiels[2])));
+    Students.getInstance().getStudentMap().put(Integer.parseInt(fiels[0]), new Student(Integer.parseInt(fiels[0]), fiels[1], Integer.parseInt(fiels[2])));
     // System.out.println(students.size());
   }
 
