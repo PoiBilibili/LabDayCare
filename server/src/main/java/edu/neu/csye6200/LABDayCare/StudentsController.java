@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 @RestController
 public class StudentsController {
 
-  private class AddRegistration{
+  private static class AddRegistration {
     private String sid;
     private String date;
 
@@ -26,6 +24,56 @@ public class StudentsController {
     public void setSid(String sid) {
       this.sid = sid;
     }
+
+    /**
+     * @return the date
+     */
+    public String getDate() {
+      return date;
+    }
+
+    /**
+     * @param date the date to set
+     */
+    public void setDate(String date) {
+      this.date = date;
+    }
+
+  }
+
+  private static class AddImmunization {
+    private String sid;
+    private String type;
+    private String date;
+
+    /**
+     * @return the sid
+     */
+    public String getSid() {
+      return sid;
+    }
+
+    /**
+     * @param sid the sid to set
+     */
+    public void setSid(String sid) {
+      this.sid = sid;
+    }
+
+    /**
+     * @return the sid
+     */
+    public String getType() {
+      return type;
+    }
+
+    /**
+     * @param sid the sid to set
+     */
+    public void setType(String type) {
+      this.type = type;
+    }
+
     /**
      * @return the date
      */
@@ -45,20 +93,28 @@ public class StudentsController {
   String path = "./roster.csv";
   FileAccessor fa = new FileAccessor(path, "Student");
 
+  public StudentsController() {
+    super();
+    fa.open();
+  }
+
   @GetMapping("/students")
   public List<Student> students() {
-    fa.open();
+
     return new ArrayList<Student>(fa.lists().values());
   }
 
   @PostMapping("/addRegistration")
   public void addRegistration(@RequestBody AddRegistration body) {
-    fa.getById(body.getSid()).registration(body.getDate());;
+
+    fa.getById(body.getSid()).registration(body.getDate());
+    ;
   }
 
   @PostMapping("/addImmunization")
-  public void addImmunization(@RequestParam("sid") String sid, @RequestParam("type") String str,@RequestParam("date") String date) {
-    fa.getById(sid).immunization(str,date);;
+  public void addImmunization(@RequestBody AddImmunization body) {
+    fa.getById(body.getSid()).immunization(body.getType(), body.getDate());
+    ;
   }
 
 }
