@@ -1,6 +1,7 @@
 package edu.neu.csye6200.LABDayCare;
 
 import java.io.*;
+import java.util.Collections;
 import java.util.HashMap;
 
 /**
@@ -19,7 +20,6 @@ public class FileAccessor {
 
   private void init(String[] fiels) {
     students.put(fiels[0], new Student(Integer.parseInt(fiels[0]), fiels[1], Integer.parseInt(fiels[2])));
-    // System.out.println(students.size());
   }
 
   public void open() {
@@ -33,7 +33,7 @@ public class FileAccessor {
       }
       in.close();
     } catch (Exception e) {
-      System.out.println(e.getStackTrace());
+      System.err.println(e.getStackTrace());
     }
   }
 
@@ -46,8 +46,13 @@ public class FileAccessor {
   }
 
   public static void main(String[] args) {
-    String path = "/Users/omnip/Programe/csye6200/LaBDayCare/src/main/java/edu/neu/csye6200/LABDayCare/roster.csv";
-    FileAccessor fa = new FileAccessor(path, "Student");
+    FileAccessor fa = new FileAccessor("./roster.csv", "Student");
     fa.open();
+
+    fa.lists()
+      .values()
+      .stream()
+      .sorted()
+      .forEach(System.out::println);
   }
 }

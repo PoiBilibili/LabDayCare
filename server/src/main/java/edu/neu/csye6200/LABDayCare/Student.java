@@ -5,8 +5,8 @@ import java.util.*;
 public class Student extends Person implements Comparable<Student> {
 	private int id;
 	private Person[] parents;// father and mother
-	private List<Registration> rglist = new Vector<>();;// registration date
-	private List<Immunization> imlist = new Vector<>();;// immunization date
+	private List<Registration> rglist = new Vector<>();// registration date
+	private List<Immunization> imlist = new Vector<>();// immunization date
 
 	public Student() {
 		super();
@@ -41,28 +41,11 @@ public class Student extends Person implements Comparable<Student> {
 
 	public String toString() {
 		return "[" + this.id + " " + super.getName() + "]";
-		// + " [Age:" + super.getAge() +"]"
-		// + "[Parents: Father:"+this.getFather() +"Mother:"+this.getMohter()+"]";
 	}
 
-	public int compareTo(Student student2) {
-		return Double.compare(this.getID(), student2.getID());
+	public int compareTo(Student that) {
+		return Double.compare(this.getID(), that.getID());
 	}
-
-	public static Comparator<Student> compareByGpa() {
-		return null;
-
-	}
-
-	public int compareByAge(Student student2) {
-		return Integer.compare(this.getAge(), student2.getAge());
-	}
-
-	// public void registration() {
-	// 	Calendar cal = Calendar.getInstance();
-	// 	Registration nr = new Registration(cal.get(Calendar.MONTH),cal.get(Calendar.DATE),cal.get(Calendar.YEAR));
-	// 	this.rglist.add(nr);
-	// }
 
 	public void registration(String date) {
 		Registration nr = new Registration(date);
@@ -73,12 +56,6 @@ public class Student extends Person implements Comparable<Student> {
 	public List<Registration> getRegistList() {
 		return rglist;
 	}
-
-	// public void immunization(String typename) {
-	// 	Calendar cal = Calendar.getInstance();
-	// 	Immunization nr = new Immunization(typename, cal.get(Calendar.MONTH),cal.get(Calendar.DATE),cal.get(Calendar.YEAR));
-	// 	this.imlist.add(nr);
-	// }
 
 	public void immunization(String typename, String date) {
 		Immunization nr = new Immunization(typename, date);

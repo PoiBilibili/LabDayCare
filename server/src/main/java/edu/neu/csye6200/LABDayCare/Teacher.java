@@ -12,10 +12,6 @@ public class Teacher extends Person implements Comparable<Teacher> {
 		return this.getName().compareTo(t2.getName());
 	}
 
-	public int compareByName(Teacher t2) {
-		return this.compareTo(t2);
-	}
-
 	public int compareByCredits(Teacher t2) {
 		return Integer.compare(this.getCredits(), t2.getCredits());
 	}

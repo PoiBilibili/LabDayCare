@@ -90,8 +90,7 @@ public class StudentsController {
 
   }
 
-  String path = "./roster.csv";
-  FileAccessor fa = new FileAccessor(path, "Student");
+  FileAccessor fa = new FileAccessor("./roster.csv", "Student");
 
   public StudentsController() {
     super();

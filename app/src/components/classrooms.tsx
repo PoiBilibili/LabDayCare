@@ -1,188 +1,14 @@
 import * as React from "react";
 
 import { inject, observer } from "mobx-react";
-import { Table, Button, Modal, Form, Input, InputNumber, List } from "antd";
+import { Table, Button } from "antd";
 import { Request } from "./utils";
 import * as querystring from "querystring";
+import { CollectionCreateForm } from "./class-form";
+import { AddStudentForm } from "./class-student-form";
+import { AddTeacherForm } from "./class-teacher-form";
 
-const FormItem = Form.Item;
-
-const CollectionCreateForm = Form.create()(
-  class extends React.Component<any, any> {
-    private formItemLayout = {
-      labelCol: { span: 4 },
-      wrapperCol: { span: 14 }
-    };
-
-    render() {
-      const { visible, onCancel, onCreate, form } = this.props;
-      const { getFieldDecorator } = form;
-      return (
-        <Modal
-          visible={visible}
-          title="Create a new classroom"
-          okText="Create"
-          onCancel={onCancel}
-          onOk={onCreate}
-        >
-          <Form layout="horizontal">
-            <FormItem label="Name" {...this.formItemLayout}>
-              {getFieldDecorator("name", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please input the name of classroom!"
-                  }
-                ]
-              })(<Input />)}
-            </FormItem>
-            <FormItem label="Groupsize" {...this.formItemLayout}>
-              {getFieldDecorator("groupsize")(
-                <InputNumber min={1} max={100} style={{ width: "76%" }} />
-              )}
-            </FormItem>
-            <FormItem label="Maxgroup" {...this.formItemLayout}>
-              {getFieldDecorator("maxgroup")(
-                <InputNumber min={1} max={100} style={{ width: "76%" }} />
-              )}
-            </FormItem>
-            <FormItem label="Minage" {...this.formItemLayout}>
-              {getFieldDecorator("minage")(
-                <InputNumber min={1} max={100} style={{ width: "76%" }} />
-              )}
-            </FormItem>
-            <FormItem label="Maxage" {...this.formItemLayout}>
-              {getFieldDecorator("maxage")(
-                <InputNumber min={1} max={100} style={{ width: "76%" }} />
-              )}
-            </FormItem>
-          </Form>
-        </Modal>
-      );
-    }
-  }
-);
-
-const AddStudentForm = Form.create()(
-  class extends React.Component<any, any> {
-    private formItemLayout = {
-      labelCol: { span: 8 },
-      wrapperCol: { span: 10 }
-    };
-
-    render() {
-      const { visible, onCancel, onCreate, form } = this.props;
-      const { getFieldDecorator } = form;
-
-      return (
-        <Modal
-          visible={visible}
-          title="Assign specify student to classroom"
-          okText="Create"
-          onCancel={onCancel}
-          onOk={onCreate}
-        >
-          <Form layout="horizontal">
-            <FormItem label="Classroom Name" {...this.formItemLayout}>
-              {getFieldDecorator("cid", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please input the name of classroom!"
-                  }
-                ]
-              })(<Input />)}
-            </FormItem>
-
-            <FormItem label="Student ID" {...this.formItemLayout}>
-              {getFieldDecorator("sid", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please input the id of student!"
-                  }
-                ]
-              })(<Input />)}
-            </FormItem>
-
-          </Form>
-        </Modal>
-      );
-    }
-  }
-);
-
-const ViewGroup = Form.create()(
-  class extends React.Component<any, any> {
-    private formItemLayout = {
-      labelCol: { span: 8 },
-      wrapperCol: { span: 10 }
-    };
-    private columns = [
-      {
-        title: "Group ID",
-        render: (text: string, record: any, index: number) => "group" + index
-      },
-      {
-        title: "Students",
-        render: (names: any) => names.join(",")
-      }
-    ];
-
-    public componentDidMount() {}
-
-    public renderStudents = (groups: any) => {
-      const list = [];
-
-      for (let key in groups) {
-        console.log();
-        const students = groups[key].students;
-        const title = `Group${+key + 1}`;
-        let description = "";
-        for (let v of students) {
-          description += v.name + ", ";
-        }
-        description = description.slice(0, -2);
-        list.push({
-          title,
-          description
-        });
-      }
-
-      return (
-        <List
-          itemLayout="horizontal"
-          dataSource={list}
-          renderItem={(item: any) => (
-            <List.Item>
-              <List.Item.Meta
-                title={item.title}
-                description={item.description}
-              />
-            </List.Item>
-          )}
-        />
-      );
-    };
-
-    render() {
-      const { visible, onCancel, groups } = this.props;
-      console.log(groups, "+++++");
-
-      return (
-        <Modal
-          visible={visible}
-          title="View groups"
-          okText="Close"
-          onOk={onCancel}
-          onCancel={onCancel}
-        >
-          <div>{this.renderStudents(groups)}</div>
-        </Modal>
-      );
-    }
-  }
-);
+import { ViewGroup } from "./class-group";
 
 export default class ClassRoom extends React.Component<any, any> {
   private columns = [
@@ -224,12 +50,14 @@ export default class ClassRoom extends React.Component<any, any> {
   ];
   private formRef: any = null;
   private formASFRef: any = null;
+  private formATFRef: any = null;
   public constructor(props: any) {
     super(props);
     this.state = {
       data: [],
       visible: false,
       visibleASF: false,
+      visibleATF: false,
       currentGroups: [],
       visibleGroups: false
     };
@@ -258,6 +86,11 @@ export default class ClassRoom extends React.Component<any, any> {
   saveASFFormRef = (formRef: any) => {
     this.formASFRef = formRef;
   };
+
+  saveATFFormRef = (formRef: any) => {
+    this.formATFRef = formRef;
+  };
+
   handleCreate = () => {
     const form = this.formRef.props.form;
     form.validateFields((err: any, values: any) => {
@@ -280,8 +113,25 @@ export default class ClassRoom extends React.Component<any, any> {
         return;
       }
 
-      console.log("Received values of form: ", values);
       Request.post(`/addstudent?${querystring.stringify(values)}`, {}).then(
+        res => {
+          console.log(res);
+          this.refresh();
+          form.resetFields();
+          this.setState({ visible: false });
+        }
+      );
+    });
+  };
+
+  handleATFCreate = () => {
+    const form = this.formASFRef.props.form;
+    form.validateFields((err: any, values: any) => {
+      if (err) {
+        return;
+      }
+
+      Request.post(`/addteacher?${querystring.stringify(values)}`, {}).then(
         res => {
           console.log(res);
           this.refresh();
@@ -300,8 +150,16 @@ export default class ClassRoom extends React.Component<any, any> {
     this.setState({ visibleASF: false });
   };
 
+  handleATFCancel = () => {
+    this.setState({ visibleATF: false });
+  };
+
   showASFModal = () => {
     this.setState({ visibleASF: true });
+  };
+
+  showATFModal = () => {
+    this.setState({ visibleATF: true });
   };
 
   setGroups = (groups: any) => {
@@ -329,6 +187,13 @@ export default class ClassRoom extends React.Component<any, any> {
           onCreate={this.handleASFCreate}
         />
 
+        <AddTeacherForm
+          wrappedComponentRef={this.saveATFFormRef}
+          visible={this.state.visibleATF}
+          onCancel={this.handleATFCancel}
+          onCreate={this.handleATFCreate}
+        />
+
         <ViewGroup
           groups={this.state.currentGroups}
           visible={this.state.visibleGroups}
@@ -337,9 +202,12 @@ export default class ClassRoom extends React.Component<any, any> {
 
         <div style={{ marginBottom: "16px" }}>
           <Button onClick={this.showModal} style={{ marginRight: "16px" }}>
-            Add
+            Create
           </Button>
-          <Button onClick={this.showASFModal}>Add Student</Button>
+          <Button onClick={this.showASFModal} style={{ marginRight: "16px" }}>
+            Add Student
+          </Button>
+          <Button onClick={this.showATFModal}>Add Teacher</Button>
         </div>
 
         <Table

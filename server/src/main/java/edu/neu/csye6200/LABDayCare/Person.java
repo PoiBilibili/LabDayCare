@@ -1,8 +1,14 @@
 package edu.neu.csye6200.LABDayCare;
 
+import java.util.Comparator;
+
 public class Person {
 	private int age;
 	private String name = null;
+
+	public static Comparator<Person> sortByAge= sortByAge();
+	public static Comparator<Person> sortByName= sortByName();
+
 
 	public Person() {
 		super();
@@ -32,14 +38,21 @@ public class Person {
 		this.name = name;
 	}
 
-	// @Override
-	// public String toString() {
-	// return "Person [age=" + age + ", name=" + name + "]";
-	// }
-	public static void demo() {
-		System.out.println("Person demo starting...");
-		Person dan = new Person(); // instantiate Person obj using default
-		System.out.println(dan.getName());
-		System.out.println("Person demo done");
+	private static Comparator<Person> sortByAge(){
+		return new Comparator<Person>(){
+			@Override
+			public int compare(Person o1, Person o2) {
+				return o1.getAge()  - o2.getAge();
+			}
+		};
+	}
+
+	private static Comparator<Person> sortByName(){
+		return new Comparator<Person>(){
+			@Override
+			public int compare(Person o1, Person o2) {
+				return o1.getName().compareTo(o2.getName());
+			}
+		};
 	}
 }

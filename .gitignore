@@ -29,3 +29,5 @@ target
 app/node_modules
 app/dist
 .DS_Store
+server/.idea
+**/Car

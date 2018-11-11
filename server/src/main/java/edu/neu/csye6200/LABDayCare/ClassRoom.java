@@ -57,7 +57,7 @@ public class ClassRoom {
 			}
 		}
 	}
-	
+
 	public boolean hasStudent(Student s){
 		if(this.students.containsValue(s)) return true;
 		return false;
