@@ -32,4 +32,9 @@ public class ClassRoomsController {
     return crs.getByName(cid).getGroups();
   }
 
+  @PostMapping("/addteacher")
+  public void addTeacher(@RequestParam("cid") String cid, @RequestParam("name") String name) {
+    crs.list().get(cid).assignTeacher(name, 17);
+  }
+
 }
