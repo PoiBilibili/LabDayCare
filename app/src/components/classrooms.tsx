@@ -7,6 +7,8 @@ import * as querystring from "querystring";
 import { CollectionCreateForm } from "./class-form";
 import { AddStudentForm } from "./class-student-form";
 import { AddTeacherForm } from "./class-teacher-form";
+import { ViewTeachers } from "./class-teachers";
+
 
 import { ViewGroup } from "./class-group";
 
@@ -44,6 +46,8 @@ export default class ClassRoom extends React.Component<any, any> {
       render: (text: string, record: any) => (
         <span>
           <a onClick={() => this.setGroups(record.groups)}>View group</a>
+
+          <a onClick={() => this.viewTeachers(record.teacherList)}>View teachers</a>
         </span>
       )
     }
@@ -59,7 +63,9 @@ export default class ClassRoom extends React.Component<any, any> {
       visibleASF: false,
       visibleATF: false,
       currentGroups: [],
-      visibleGroups: false
+      visibleGroups: false,
+      currentTeachers: [],
+      visibleTeachers: false,
     };
   }
 
@@ -112,6 +118,7 @@ export default class ClassRoom extends React.Component<any, any> {
       if (err) {
         return;
       }
+      console.log(values)
 
       Request.post(`/addstudent?${querystring.stringify(values)}`, {}).then(
         res => {
@@ -125,7 +132,7 @@ export default class ClassRoom extends React.Component<any, any> {
   };
 
   handleATFCreate = () => {
-    const form = this.formASFRef.props.form;
+    const form = this.formATFRef.props.form;
     form.validateFields((err: any, values: any) => {
       if (err) {
         return;
@@ -154,6 +161,10 @@ export default class ClassRoom extends React.Component<any, any> {
     this.setState({ visibleATF: false });
   };
 
+  handleTeachersCancel = () =>{
+    this.setState({ visibleTeachers: false });
+  }
+
   showASFModal = () => {
     this.setState({ visibleASF: true });
   };
@@ -165,6 +176,10 @@ export default class ClassRoom extends React.Component<any, any> {
   setGroups = (groups: any) => {
     this.setState({ currentGroups: groups, visibleGroups: true });
   };
+
+  viewTeachers = (teachers: any) =>{
+    this.setState({ currentTeachers: teachers, visibleTeachers: true });
+  }
 
   handleGroupsCancel = () => {
     this.setState({ visibleGroups: false });
@@ -198,6 +213,12 @@ export default class ClassRoom extends React.Component<any, any> {
           groups={this.state.currentGroups}
           visible={this.state.visibleGroups}
           onCancel={this.handleGroupsCancel}
+        />
+
+        <ViewTeachers
+          groups={this.state.currentTeachers}
+          visible={this.state.visibleTeachers}
+          onCancel={this.handleTeachersCancel}
         />
 
         <div style={{ marginBottom: "16px" }}>

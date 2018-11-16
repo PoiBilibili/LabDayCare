@@ -49,7 +49,6 @@ public class Student extends Person implements Comparable<Student> {
 
 	public void registration(String date) {
 		Registration nr = new Registration(date);
-		System.out.println(rglist);
 		this.rglist.add(nr);
 	}
 

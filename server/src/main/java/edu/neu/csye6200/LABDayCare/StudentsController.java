@@ -19,25 +19,12 @@ public class StudentsController {
     }
 
     /**
-     * @param sid the sid to set
-     */
-    public void setSid(String sid) {
-      this.sid = sid;
-    }
-
-    /**
      * @return the date
      */
     public String getDate() {
       return date;
     }
 
-    /**
-     * @param date the date to set
-     */
-    public void setDate(String date) {
-      this.date = date;
-    }
 
   }
 
@@ -54,13 +41,6 @@ public class StudentsController {
     }
 
     /**
-     * @param sid the sid to set
-     */
-    public void setSid(String sid) {
-      this.sid = sid;
-    }
-
-    /**
      * @return the sid
      */
     public String getType() {
@@ -68,24 +48,10 @@ public class StudentsController {
     }
 
     /**
-     * @param sid the sid to set
-     */
-    public void setType(String type) {
-      this.type = type;
-    }
-
-    /**
      * @return the date
      */
     public String getDate() {
       return date;
-    }
-
-    /**
-     * @param date the date to set
-     */
-    public void setDate(String date) {
-      this.date = date;
     }
 
   }
